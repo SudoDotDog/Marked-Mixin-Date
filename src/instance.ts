@@ -5,6 +5,7 @@
  */
 
 import { MarkedNativeClassInstance } from "@sudoo/marked";
+import { getMarkedMixinDateMember } from "./member";
 
 export class MarkedDateMixinClassInstance extends MarkedNativeClassInstance {
 
@@ -20,15 +21,20 @@ export class MarkedDateMixinClassInstance extends MarkedNativeClassInstance {
         super();
 
         if (typeof initial === 'string' || typeof initial === 'number') {
+
             this._nativeDate = new Date(initial);
+        } else if (initial instanceof MarkedDateMixinClassInstance) {
+
+            this._nativeDate = new Date(initial.toNative());
         } else {
+
             this._nativeDate = new Date();
         }
     }
 
     public getMember(name: string): any {
 
-        throw new Error("Method not implemented.");
+        return getMarkedMixinDateMember(this._nativeDate, name);
     }
 
     public toNative(): Date {

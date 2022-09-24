@@ -48,6 +48,23 @@ describe('Given (Construct) Case for Integration Test', (): void => {
         expect(result.exports.default).to.be.deep.equal(date);
     });
 
+    it('should be able to construct date class with inject with initial date value', async (): Promise<void> => {
+
+        const sandbox: Sandbox = createInjectTestSandbox();
+
+        const date: Date = new Date();
+
+        const result: MarkedResult = await sandbox.evaluate([
+            `const date = new Date("${date.toISOString()}");`,
+            `const date2 = new Date(date);`,
+            `export default date2;`,
+        ].join('\n'));
+
+        assertSucceedMarkedResult(result);
+
+        expect(result.exports.default).to.be.deep.equal(date);
+    });
+
     it('should be able to construct date class with provide', async (): Promise<void> => {
 
         const sandbox: Sandbox = createProvideTestSandbox();
