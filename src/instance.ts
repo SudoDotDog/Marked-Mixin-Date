@@ -4,7 +4,8 @@
  * @description Instance
  */
 
-import { MarkedNativeClassInstance } from "@sudoo/marked";
+import { ISandbox, MarkedNativeClassInstance } from "@sudoo/marked";
+import { wrapMarkedMixinFunction } from "@sudoo/marked-mixin";
 import { getMarkedMixinDateMember } from "./member";
 
 export class MarkedDateMixinClassInstance extends MarkedNativeClassInstance {
@@ -32,9 +33,14 @@ export class MarkedDateMixinClassInstance extends MarkedNativeClassInstance {
         }
     }
 
-    public getMember(name: string): any {
+    public getMember(name: string, sandbox: ISandbox): any {
 
-        return getMarkedMixinDateMember(this._nativeDate, name);
+        const member = getMarkedMixinDateMember(this._nativeDate, name);
+
+        if (typeof member === 'function') {
+            return wrapMarkedMixinFunction(sandbox, member);
+        }
+        return member;
     }
 
     public toNative(): Date {
