@@ -20,28 +20,48 @@ describe('Given (Construct) Case for Integration Test', (): void => {
 
         const sandbox: Sandbox = createInjectTestSandbox();
 
+        const date: Date = new Date();
+
         const result: MarkedResult = await sandbox.evaluate([
-            `const date = new Date();`,
+            `const date = new Date("${date.toISOString()}");`,
             `export default date;`,
         ].join('\n'));
 
         assertSucceedMarkedResult(result);
 
-        expect(result.exports.default).to.be.equal("[Marked Date Mixin Instance]");
+        expect(result.exports.default).to.be.deep.equal(date);
+    });
+
+    it('should be able to construct date class with inject with initial value', async (): Promise<void> => {
+
+        const sandbox: Sandbox = createInjectTestSandbox();
+
+        const date: Date = new Date();
+
+        const result: MarkedResult = await sandbox.evaluate([
+            `const date = new Date("${date.toISOString()}");`,
+            `export default date;`,
+        ].join('\n'));
+
+        assertSucceedMarkedResult(result);
+
+        expect(result.exports.default).to.be.deep.equal(date);
     });
 
     it('should be able to construct date class with provide', async (): Promise<void> => {
 
         const sandbox: Sandbox = createProvideTestSandbox();
 
+        const date: Date = new Date();
+
         const result: MarkedResult = await sandbox.evaluate([
             `import Date from 'Date';`,
-            `const date = new Date();`,
+            `const date = new Date("${date.toISOString()}");`,
             `export default date;`,
         ].join('\n'));
 
         assertSucceedMarkedResult(result);
 
-        expect(result.exports.default).to.be.equal("[Marked Date Mixin Instance]");
+        expect(result.exports.default).to.be.deep.equal(date);
     });
 });

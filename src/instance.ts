@@ -19,7 +19,11 @@ export class MarkedDateMixinClassInstance extends MarkedNativeClassInstance {
 
         super();
 
-        this._nativeDate = new Date(initial);
+        if (typeof initial === 'string' || typeof initial === 'number') {
+            this._nativeDate = new Date(initial);
+        } else {
+            this._nativeDate = new Date();
+        }
     }
 
     public getMember(name: string): any {
@@ -27,8 +31,8 @@ export class MarkedDateMixinClassInstance extends MarkedNativeClassInstance {
         throw new Error("Method not implemented.");
     }
 
-    public toNative(): string {
+    public toNative(): Date {
 
-        return "[Marked Date Mixin Instance]";
+        return this._nativeDate;
     }
 }
