@@ -4,6 +4,7 @@
  * @description Index
  */
 
+export * from "./class";
 export * from "./factory";
-export * from "./methods";
+export * from "./instance";
 

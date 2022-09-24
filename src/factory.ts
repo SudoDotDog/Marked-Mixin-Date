@@ -4,9 +4,9 @@
  * @description Factory
  */
 
-import { MarkedExportsMixinFactory } from "@sudoo/marked-mixin";
-import { MarkedDateMixinMethods } from "./methods";
+import { MarkedDefaultMixinFactory } from "@sudoo/marked-mixin";
+import { markedDateMixinClass } from "./class";
 
-export const markedDateMixinFactory = MarkedExportsMixinFactory.fromExports(
-    MarkedDateMixinMethods,
+export const markedDateMixinFactory = MarkedDefaultMixinFactory.fromObject(
+    markedDateMixinClass,
 );
