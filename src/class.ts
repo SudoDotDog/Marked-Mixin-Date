@@ -9,7 +9,8 @@ import { MarkedDateMixinClassInstance } from "./instance";
 
 export const markedDateMixinClass = MarkedNativeClass.create(
     (initial: any) => {
-        return new MarkedDateMixinClassInstance();
+
+        return MarkedDateMixinClassInstance.create(initial);
     },
     {
 
